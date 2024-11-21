@@ -29,8 +29,13 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product){
-        return productService.saveProduct(product);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product){
+        try {
+            Product savedProduct = productService.saveProduct(product);
+            return ResponseEntity.ok(savedProduct);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping
